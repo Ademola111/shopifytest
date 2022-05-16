@@ -1,0 +1,1 @@
+SECRET_KEY = '345@#OhN'

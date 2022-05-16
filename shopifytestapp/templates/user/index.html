@@ -1,0 +1,65 @@
+{% extends 'user/base.html' %}
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {% with m = get_flashed_messages() %}
+                {% if m %}
+                {{m}}
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+        <div class="row">
+            <h1>Bags</h1>
+            {% for item in prod %}
+			<div class="col-md-3 mt-3 mb-3">
+				<div class="card">
+					<a href="/product/{{item.id}}"><img src="/static/images/{{item.image}}" class="card-img-top img-fluid" alt="{{item.product_name}}" width="100" height="100"></a>
+				  <div class="card-body text-light text-center" style="background-color: black;">
+					<h6 class="card-title text-center">{{item.name}}</h6>
+					<p class="card-tex text-center mb-2">N{{item.price}}</p>
+                    <span class="btn btn-success"><a href="/detail/{{item.id}}"> View Product</a></span>
+				  </div>
+				</div>
+			</div>
+			{% endfor %} 
+        </div>
+        <div class="row">
+            <h1>Shoes</h1>
+            {% for item in prod1 %}
+			<div class="col-md-3 mt-3 mb-3">
+				<div class="card">
+					<a href="/product/{{item.id}}"><img src="/static/images/{{item.image}}" class="card-img-top img-fluid" alt="{{item.product_name}}" width="100" height="100"></a>
+				  <div class="card-body text-light text-center" style="background-color: black;">
+					<h6 class="card-title text-center">{{item.name}}</h6>
+					<p class="card-tex text-center mb-2">N{{item.price}}</p>
+                    <span class="btn btn-success"><a href="/detail/{{item.id}}"> View Product</a></span>
+				  </div>
+				</div>
+			</div>
+			{% endfor %} 
+        </div>
+        <div class="row">
+            <h1>Caps</h1>
+            {% for item in prod2 %}
+			<div class="col-md-3 mt-3 mb-3" style="border-radius: 20px !important;">
+				<div class="card">
+					<a href="/product/{{item.id}}"><img src="/static/images/{{item.image}}" class="card-img-top img-fluid" alt="{{item.name}}" width="100"></a>
+				  <div class="card-body text-light text-center" style="background-color: black; ">
+					<h6 class="card-title text-center">{{item.name}}</h6>
+					<p class="card-tex text-center">N{{item.price}}</p>
+                    <span class="btn btn-success"><a href="/detail/{{item.id}}"> View Product</a></span>
+				  </div>
+				</div>
+			</div>
+			{% endfor %} 
+        </div>
+    </div>
+</div>
+{% endblock %}

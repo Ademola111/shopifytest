@@ -1,0 +1,9 @@
+HOW TO USE KINSHA LOGISTIC
+1. click on create inventory on the top right corner to create an inventory
+2. click on add product of add various items to each inventory
+3. click on view product to see product details
+4. click on edit product to change product details. Note you can't update the product image only without filling all field
+    like price, description and size the title can be left on change.
+5. You can delete an item from the list of product that will be displayed from the database. once you click on delete
+    you will be notify to confirm your action or cancle if is by mistake to retain the product been showcased
+6. You can view each products per inventory category with the use of inventory menu tab.

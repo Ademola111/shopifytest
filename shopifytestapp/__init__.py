@@ -1,5 +1,6 @@
 
 from flask import Flask
+from flask_marshmallow import Marshmallow
 from flask_wtf.csrf import CSRFProtect
 
 from flask_sqlalchemy import SQLAlchemy
@@ -18,9 +19,15 @@ app.config.from_pyfile('config.py', silent=False) #this is the config in instanc
 #database connection
 db=SQLAlchemy(app)
 
+#marshmallow seetings
+ma=Marshmallow(app)
+
 #load your routes here
 from shopifytestapp.routes import userroutes #since routes is now a module on its own
 
 #load models
 from shopifytestapp import models
+
+#load api
+from shopifytestapp import api
 

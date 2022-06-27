@@ -1,7 +1,8 @@
+from dataclasses import fields
 import re
 
 from sqlalchemy import ForeignKey
-from shopifytestapp import db
+from shopifytestapp import db, ma
 
 class Inventory(db.Model):
     id=db.Column(db.Integer(), autoincrement=True, primary_key=True)
@@ -9,6 +10,13 @@ class Inventory(db.Model):
 
     #relationship setup
     productobj = db.relationship('Product', back_populates='inventoryobj')
+
+    def __init__(self, name):
+        self.name=name
+
+class InventorySchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'name')
 
 class Product(db.Model):
     id=db.Column(db.Integer(), autoincrement=True, primary_key=True)
@@ -23,3 +31,18 @@ class Product(db.Model):
 
     #relationship setup
     inventoryobj = db.relationship('Inventory', back_populates='productobj')
+
+    def __init__(self, name, price, description, size, image, status, inventoryid):
+        self.name=name
+        self.price = price
+        self.description = description
+        self.size = size
+        self.image = image
+        self.status = status
+        self.inventoryid= inventoryid
+
+class ProductSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'name', 'price', 'description', 'size', 'image', 'status', 'inventoryid')
+
+

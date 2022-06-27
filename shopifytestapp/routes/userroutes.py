@@ -1,7 +1,7 @@
 """this file contains all our routes, it is like the controller that determines what happhens when the user visit our app"""
-from filecmp import dircmp
+from flask_sqlalchemy import SQLAlchemy
 import requests, random, os, math
-from flask import make_response, render_template, request, redirect, url_for,flash, session
+from flask import make_response, render_template, request, redirect, url_for,flash, session, jsonify
 from sqlalchemy import desc
 
 from shopifytestapp import app,db

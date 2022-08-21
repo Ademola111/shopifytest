@@ -1,9 +1,8 @@
 """ API Section """
-from flask_sqlalchemy import SQLAlchemy
 import requests, random, os, math
-from flask import request, flash, session, jsonify
+from flask import request, session, jsonify
 from sqlalchemy import desc
-from flask_marshmallow import Marshmallow
+from flask_cors import cross_origin
 
 from shopifytestapp import app,db, csrf
 from shopifytestapp.models import Inventory, Product, ProductSchema, InventorySchema
@@ -21,6 +20,7 @@ inventories_schema = InventorySchema(many=True)
 
 """get all products"""
 @app.route('/product/v1/get', methods=['GET'])
+@cross_origin()
 def get_product():
     pdt=db.session.query(Product).all()
     results= products_schema.dump(pdt)
@@ -28,6 +28,7 @@ def get_product():
 
 """get individual product"""
 @app.route('/product/v1/get/<id>', methods=['GET'])
+@cross_origin()
 def get_one_product(id):
     pdt=db.session.query(Product).get(id)
     result= product_schema.dump(pdt)
@@ -35,6 +36,7 @@ def get_one_product(id):
 
 """get all inventory"""
 @app.route('/inventory/v1/get', methods=['GET'])
+@cross_origin()
 def get_inventory():
     inv=db.session.query(Inventory).all()
     results= inventories_schema.dump(inv)
@@ -42,6 +44,7 @@ def get_inventory():
 
 """get individual inventory"""
 @app.route('/inventory/v1/get/<id>', methods=['GET'])
+@cross_origin()
 def get_one_inventory(id):
     inv=db.session.query(Inventory).get(id)
     result= inventory_schema.dump(inv)
@@ -50,6 +53,7 @@ def get_one_inventory(id):
 
 """Post products"""
 @app.route('/product/v1/add', methods=['POST'])
+@cross_origin()
 @csrf.exempt
 def add_product():
     name = request.json['name']
@@ -70,6 +74,7 @@ def add_product():
 
 """Post inventory"""
 @app.route('/inventory/v1/add', methods=['POST'])
+@cross_origin()
 @csrf.exempt
 def add_inventory():
     name = request.json['name']
@@ -81,6 +86,7 @@ def add_inventory():
 
 """Put api for image update"""
 @app.route('/product/v1/update/<id>', methods=['PUT'])
+@cross_origin()
 @csrf.exempt
 def add_image(id):
     img=request.files['file']
@@ -99,6 +105,7 @@ def add_image(id):
 
 """Put api for content update"""
 @app.route('/product/v1/update/content/<id>', methods=['PUT'])
+@cross_origin()
 @csrf.exempt
 def update_content(id):
     name = request.json['name']
@@ -131,6 +138,7 @@ def update_inventory(id):
 
 """Delete api for product"""
 @app.route('/product/v1/delete/<id>', methods=['DELETE'])
+@cross_origin()
 @csrf.exempt
 def delete_product(id):
     produ=Product.query.get(id)
@@ -140,9 +148,46 @@ def delete_product(id):
 
 """Delete api for invetory"""
 @app.route('/inventroy/v1/delete/<id>', methods=['DELETE'])
+@cross_origin()
 @csrf.exempt
 def delete_inventory(id):
     evet=Inventory.query.get(id)
     db.session.delete(evet)
     db.session.commit()
     return inventory_schema.jsonify(evet)
+
+"""getting product collection with inventory id"""
+@app.route('/product/bags/v1/', methods=['GET'])
+@cross_origin()
+def bag():
+    prud=Product.query.filter(Product.inventoryid==1).order_by(desc(Product.id)).all()
+    results=products_schema.dump(prud)
+    return jsonify(results)
+
+@app.route('/product/shoes/v1/', methods=['GET'])
+@cross_origin()
+def shoe():
+    prud=Product.query.filter(Product.inventoryid==2).order_by(desc(Product.id)).all()
+    results=products_schema.dump(prud)
+    return jsonify(results)
+
+@app.route('/product/caps/v1/', methods=['GET'])
+@cross_origin()
+def cap():
+    prud=Product.query.filter(Product.inventoryid==3).order_by(desc(Product.id)).all()
+    results=products_schema.dump(prud)
+    return jsonify(results)
+
+@app.route('/product/belts/v1/', methods=['GET'])
+@cross_origin()
+def belt():
+    prud=Product.query.filter(Product.inventoryid==4).order_by(desc(Product.id)).all()
+    results=products_schema.dump(prud)
+    return jsonify(results)
+
+@app.route('/product/glasses/v1/', methods=['GET'])
+@cross_origin()
+def glasses():
+    prud=Product.query.filter(Product.inventoryid==5).order_by(desc(Product.id)).all()
+    results=products_schema.dump(prud)
+    return jsonify(results)
